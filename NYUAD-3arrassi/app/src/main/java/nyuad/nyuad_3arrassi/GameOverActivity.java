@@ -43,4 +43,10 @@ public class GameOverActivity extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(nextScreen);
+    }
 }
