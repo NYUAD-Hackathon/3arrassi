@@ -5,12 +5,17 @@ Learn new language in a fun and easy way
 
 #### Students
 
-- ...
+- Kong Huang
+- Mohammed AlTamimi
+- Rihab El Houda Djabou
+- Lidia Daniela Jerónimo Sánchez
+- Meriem Chehih
 
 #### Mentors
 
 - Sashko Stubailo
-- ...
+- Rabeb Othnani
+- Henok Getachew Alemayehu
 
 ### Technology stack
 
