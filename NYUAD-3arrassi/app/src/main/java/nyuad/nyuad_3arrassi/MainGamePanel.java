@@ -114,6 +114,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         wordDatabase.close();
 
         Collections.shuffle(wordList);
+        while (!(wordList.get(currentWord).getCategory() == 1)) {
+            currentWord++;
+        }
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
@@ -168,6 +171,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
             thread = null;
         }
         accelerometer.unregisterListener();
+
         gameTimer.cancel();
         animationTimer.cancel();
 
@@ -208,14 +212,15 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     void nextWord(){
-        currentWord++;
-        while(!(wordList.get(currentWord).getCategory() == 1)){
-            currentWord++;
+        currentWord = (currentWord+1)%wordList.size();
+        while (!(wordList.get(currentWord).getCategory() == 1)) {
+            currentWord = (currentWord+1)%wordList.size();
         }
-
         animationTimer.start();
         isAnimationDone = false;
-        gameTimer.cancel();
+        if (currentGameTime < 10000) {
+            gameTimer.cancel();
+        }
     }
 
     @Override
