@@ -57,16 +57,16 @@ public class MyAccelerometer implements SensorEventListener {
      * event.values[1]: pitch, rotation around the X axis.
      * event.values[2]: roll, rotation around the Y axis.
     */
-        if (phoneState != 0 && (event.values[2] <= -8)){
+        if (phoneState != 0 && (event.values[2] <= -7)){
             aGamePanel.correct();
             Log.d(TAG, "now screen is facing down. Value: " + event.values[2]);
             phoneState = 0;
         }
-        if (phoneState != 1 && (-8 <= event.values[2] && event.values[2] <= 8)){
+        if (phoneState != 1 && (-7 <= event.values[2] && event.values[2] <= 7)){
             Log.d(TAG, "now screen is facing middle. Value: " + event.values[2]);
             phoneState = 1;
         }
-        if (phoneState != 2 && (event.values[2] >= 8)){
+        if (phoneState != 2 && (event.values[2] >= 7)){
             aGamePanel.pass();
             Log.d(TAG, "now screen is facing up. Value: " + event.values[2]);
             phoneState = 2;

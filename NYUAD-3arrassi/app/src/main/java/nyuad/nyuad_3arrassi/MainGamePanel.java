@@ -28,6 +28,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private int gameTime = 0;
     private int currentWord = 0;
     private int score = 0;
+    private long currentGameTime = 10000;
     private String countdownTimer = "";
 
     boolean isGameDone = false;
@@ -39,6 +40,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private String[] sampleWords = {"English1", "English2", "English3", "English4", "English5", "English6"};
 
+    private CountDownTimer gameTimer;
+
     private CountDownTimer animationTimer = new CountDownTimer(2000, 300) { // adjust the milli seconds here
 
         public void onTick(long millisUntilFinished) {
@@ -46,6 +49,29 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         public void onFinish() {
             isAnimationDone = true;
+            gameTimer = new CountDownTimer(currentGameTime, 300) { // adjust the milli seconds here
+
+                public void onTick(long millisUntilFinished) {
+
+                    countdownTimer = ""+String.format("%02d:%02d:%02d",
+                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+
+                    currentGameTime = millisUntilFinished;
+                }
+
+                public void onFinish() {
+                    countdownTimer = "done!";
+                    isGameDone = true;
+                    back = false;
+                    gameOver = true;
+                    endGame();
+                }
+
+            }.start();
             pass = false;
             correct = false;
         }
@@ -76,7 +102,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         // we can safely start the game loop
         setWillNotDraw(false);
         accelerometer.registerListener();
-        new CountDownTimer(10000, 300) { // adjust the milli seconds here
+        gameTimer = new CountDownTimer(currentGameTime, 300) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
 
@@ -86,6 +112,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+
+                currentGameTime = millisUntilFinished;
             }
 
             public void onFinish() {
@@ -156,6 +184,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         }
         animationTimer.start();
         isAnimationDone = false;
+        gameTimer.cancel();
     }
 
     @Override
