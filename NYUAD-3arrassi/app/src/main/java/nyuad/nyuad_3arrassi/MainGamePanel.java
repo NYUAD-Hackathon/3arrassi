@@ -21,7 +21,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private static final String TAG = MainGamePanel.class.getSimpleName();
     MyAccelerometer accelerometer;
     private MainThread thread;
-    private long ctime;
+    //private long ctime;
 
     public MainGamePanel(Context context) {
         super(context);
@@ -45,6 +45,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder holder) {
         // at this point the surface is created and
         // we can safely start the game loop
+        setWillNotDraw(false);
         accelerometer.registerListener();
         thread.setRunning(true);
         thread.start();
@@ -89,10 +90,18 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     protected void onDraw(Canvas canvas) {
         //paint.setStyle(Paint.Style.FILL);
+        canvas.drawColor(Color.BLUE);
+        Paint textPaint = new Paint();
+        String sampleText = "hello";
+        textPaint.setARGB(200, 255, 255, 255);
+        textPaint.setTextSize(300);
+        int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
+        int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+        canvas.drawText(sampleText, xPos, yPos, textPaint);
     }
 
     public void update(long tickCount){
-        ctime = tickCount;
+    //    ctime = tickCount;
     }
     public void draw(Canvas canvas){
         //Log.d(TAG, "Time: " + ctime);

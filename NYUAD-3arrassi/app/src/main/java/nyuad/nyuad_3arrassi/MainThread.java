@@ -39,7 +39,16 @@ public class MainThread extends Thread {
             Canvas c = null;
             tickCount++;
             gamePanel.update(tickCount);
-            gamePanel.draw(c);
+            try {
+                c = gamePanel.getHolder().lockCanvas();
+                synchronized (gamePanel.getHolder()) {
+                    gamePanel.onDraw(c);
+                }
+            } finally {
+                if (c != null) {
+                    gamePanel.getHolder().unlockCanvasAndPost(c);
+                }
+            }
             // update game state
             // render state to the screen
         }
