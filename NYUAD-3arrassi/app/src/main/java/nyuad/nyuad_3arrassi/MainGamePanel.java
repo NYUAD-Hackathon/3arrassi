@@ -15,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import android.os.CountDownTimer;
 
@@ -110,6 +111,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         Log.d(TAG, DatabaseUtils.dumpCursorToString(cDB));
         cDB.close();
         wordDatabase.close();
+
+        Collections.shuffle(wordList);
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
