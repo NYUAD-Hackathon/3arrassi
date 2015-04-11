@@ -39,7 +39,9 @@ public class GameOverActivity extends Activity {
             public void onClick(View arg0) {
                 Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
                 // starting new activity
+                nextScreen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(nextScreen);
+                finish();
             }
         });
     }
@@ -47,6 +49,8 @@ public class GameOverActivity extends Activity {
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
         Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+        nextScreen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(nextScreen);
+        finish();
     }
 }
