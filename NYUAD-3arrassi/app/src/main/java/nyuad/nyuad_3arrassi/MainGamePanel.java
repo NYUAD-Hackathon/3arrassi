@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import java.util.concurrent.TimeUnit;
+import android.os.CountDownTimer;
 
 import java.util.Stack;
 
@@ -21,7 +23,13 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private static final String TAG = MainGamePanel.class.getSimpleName();
     MyAccelerometer accelerometer;
     private MainThread thread;
-    //private long ctime;
+
+    private int gameTime = 0;
+    private int currentWord = 0;
+    private String countdownTimer = "";
+
+    private String[] sampleWords = {"English1", "English2", "English3", "English4", "English5", "English6"};
+
 
     public MainGamePanel(Context context) {
         super(context);
@@ -47,6 +55,23 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         // we can safely start the game loop
         setWillNotDraw(false);
         accelerometer.registerListener();
+        new CountDownTimer(60000, 300) { // adjust the milli seconds here
+
+            public void onTick(long millisUntilFinished) {
+
+                countdownTimer = ""+String.format("%02d:%02d:%02d",
+                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+            }
+
+            public void onFinish() {
+                countdownTimer = "done!";
+            }
+        }.start();
+
         thread.setRunning(true);
         thread.start();
     }
@@ -82,29 +107,39 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         return super.onTouchEvent(event);
     }
 
-    void updateAccelerometer(float tx, float ty){
-        Log.d(TAG, "Accelerometer shenanigans: " + tx + ", " + ty );
+    void nextWord(){
+        currentWord++;
+        if (currentWord > sampleWords.length - 1){
+            currentWord = 0;
+        }
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //paint.setStyle(Paint.Style.FILL);
-        canvas.drawColor(Color.BLUE);
-        Paint textPaint = new Paint();
-        String sampleText = "hello";
-        textPaint.setARGB(200, 255, 255, 255);
-        textPaint.setTextSize(300);
-        int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
-        int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-        canvas.drawText(sampleText, xPos, yPos, textPaint);
+
     }
 
-    public void update(long tickCount){
-    //    ctime = tickCount;
+    public void update(){
+        gameTime++;
+        //Log.d(TAG, "Game time shenanigans: " + gameTime);
     }
-    public void draw(Canvas canvas){
-        //Log.d(TAG, "Time: " + ctime);
+
+    public void render(Canvas canvas){
+        canvas.drawColor(Color.BLUE);
+        Paint textPaint = new Paint();
+        String sampleText = sampleWords[currentWord];
+        textPaint.setARGB(200, 255, 255, 255);
+        textPaint.setTextSize(300);
+        int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWords[currentWord], 0, sampleWords[currentWord].length())) / 2.0f);
+        int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+        canvas.drawText(sampleWords[currentWord], xPos, yPos, textPaint);
+
+        textPaint.setARGB(200, 255, 255, 255);
+        textPaint.setTextSize(100);
+        Log.d(TAG, countdownTimer);
+        xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
+        yPos = (int) ((canvas.getHeight() / 1.3) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
+        canvas.drawText(countdownTimer, xPos, yPos, textPaint);
     }
 
 }
