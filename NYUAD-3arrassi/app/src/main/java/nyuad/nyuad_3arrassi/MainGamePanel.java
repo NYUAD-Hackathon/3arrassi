@@ -35,6 +35,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private int currentWord = 0;
     private int score = 0;
     private long currentGameTime = 60000;
+    private int currentCategory = 1;
     private String countdownTimer = "";
 
     boolean isGameDone = false;
@@ -98,7 +99,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         cDB.moveToFirst();
         while (cDB.isAfterLast() == false) {
-            String category = cDB.getString(1);
+            int category = cDB.getInt(1);
             String arabicWord = cDB.getString(2);
             String englishWord = cDB.getString(3);
             String arabicPron = cDB.getString(4);
@@ -208,9 +209,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     void nextWord(){
         currentWord++;
-        if (currentWord > wordList.size() - 1){
-            currentWord = 0;
+        while(!(wordList.get(currentWord).getCategory() == 1)){
+            currentWord++;
         }
+
         animationTimer.start();
         isAnimationDone = false;
         gameTimer.cancel();
@@ -222,7 +224,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        gameTime++;
+        if (currentWord > wordList.size() - 1){
+            currentWord = 0;
+        }
         //Log.d(TAG, "Game time shenanigans: " + gameTime);
     }
 

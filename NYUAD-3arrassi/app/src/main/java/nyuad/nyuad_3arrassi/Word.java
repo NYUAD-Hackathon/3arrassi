@@ -3,14 +3,14 @@ package nyuad.nyuad_3arrassi;
 
 public class Word {
     private int id;
-    private String category;
+    private int category;
     private String arabic;
     private String english;
     private String arabicPronounce;
     private String englishPronounce;
 
 
-    public Word(String category, String arabic, String english, String arabicPronounce, String englishPronounce) {
+    public Word(int category, String arabic, String english, String arabicPronounce, String englishPronounce) {
         this.category = category;
         this.arabic = arabic;
         this.english = english;
@@ -22,7 +22,7 @@ public class Word {
         return this.id;
     }
 
-    public String getCategory(){  return this.category;  }
+    public int getCategory(){  return this.category;  }
     public String getArabic(){
         return this.arabic;
     }
@@ -37,7 +37,7 @@ public class Word {
     }
 
 
-    public void setCategory(String category){  this.category = category;  }
+    public void setCategory(int category){  this.category = category;  }
     public void setArabic(String arabic){
         this.arabic = arabic;
     }
