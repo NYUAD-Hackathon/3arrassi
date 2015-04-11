@@ -2,6 +2,8 @@ package nyuad.nyuad_3arrassi;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.content.Intent;
@@ -87,6 +89,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         thread = new MainThread(getHolder(), this);
         accelerometer = new MyAccelerometer(context, this);
 
+        MyDatabase wordDatabase = new MyDatabase(context);
+        Cursor test = wordDatabase.getWords();
+
+        Log.d(TAG, DatabaseUtils.dumpCursorToString(test));
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
     }
