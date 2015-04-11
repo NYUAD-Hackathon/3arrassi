@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,9 +27,29 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private int gameTime = 0;
     private int currentWord = 0;
+    private int score = 0;
     private String countdownTimer = "";
 
+    boolean isGameDone = false;
+    boolean isAnimationDone = true;
+    boolean pass = false;
+    boolean correct = false;
+    boolean back = true;
+    boolean gameOver = false;
+
     private String[] sampleWords = {"English1", "English2", "English3", "English4", "English5", "English6"};
+
+    private CountDownTimer animationTimer = new CountDownTimer(2000, 300) { // adjust the milli seconds here
+
+        public void onTick(long millisUntilFinished) {
+        }
+
+        public void onFinish() {
+            isAnimationDone = true;
+            pass = false;
+            correct = false;
+        }
+    };
 
 
     public MainGamePanel(Context context) {
@@ -55,7 +76,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         // we can safely start the game loop
         setWillNotDraw(false);
         accelerometer.registerListener();
-        new CountDownTimer(60000, 300) { // adjust the milli seconds here
+        new CountDownTimer(10000, 300) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
 
@@ -69,7 +90,12 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
             public void onFinish() {
                 countdownTimer = "done!";
+                isGameDone = true;
+                back = false;
+                gameOver = true;
+                endGame();
             }
+
         }.start();
 
         thread.setRunning(true);
@@ -79,32 +105,48 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG, "Surface is being destroyed");
-        // tell the thread to shut down and wait for it to finish
-        // this is a clean shutdown
-        boolean retry = true;
-        while (retry) {
-            try {
-                thread.join();
-                retry = false;
-            } catch (InterruptedException e) {
-                // try again shutting down the thread
-            }
+        isGameDone = true;
+
+        if(thread !=null){
+            thread.interrupt();
+            thread = null;
         }
         accelerometer.unregisterListener();
+
         Log.d(TAG, "Thread was shut down cleanly");
+    }
+
+    public void endGame(){
+        if (gameOver) {
+            Intent intent = new Intent().setClass(getContext(), GameOverActivity.class);
+            intent.putExtra("score", Integer.toString(score));
+            ((Activity) getContext()).startActivity(intent);
+            gameOver = false;
+        }
+        else {
+            if (back) {
+                Intent intent = new Intent().setClass(getContext(), MainActivity.class);
+                intent.putExtra("score", Integer.toString(score));
+                ((Activity) getContext()).startActivity(intent);
+                back = false;
+            }
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (event.getY() > getHeight() - 50) {
-                thread.setRunning(false);
-                ((Activity)getContext()).finish();
-            } else {
-                Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-            }
-        }
-        return super.onTouchEvent(event);
+        return false;
+    }
+
+    void pass(){
+        pass = true;
+        nextWord();
+    }
+
+    void correct(){
+        correct = true;
+        score++;
+        nextWord();
     }
 
     void nextWord(){
@@ -112,6 +154,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         if (currentWord > sampleWords.length - 1){
             currentWord = 0;
         }
+        animationTimer.start();
+        isAnimationDone = false;
     }
 
     @Override
@@ -125,21 +169,43 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void render(Canvas canvas){
-        canvas.drawColor(Color.BLUE);
-        Paint textPaint = new Paint();
-        String sampleText = sampleWords[currentWord];
-        textPaint.setARGB(200, 255, 255, 255);
-        textPaint.setTextSize(300);
-        int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWords[currentWord], 0, sampleWords[currentWord].length())) / 2.0f);
-        int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-        canvas.drawText(sampleWords[currentWord], xPos, yPos, textPaint);
+        if (!isGameDone) {
+            if (isAnimationDone) {
+                canvas.drawColor(Color.BLUE);
+                Paint textPaint = new Paint();
+                String sampleText = sampleWords[currentWord];
+                textPaint.setARGB(200, 255, 255, 255);
+                textPaint.setTextSize(300);
+                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
+                int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(sampleText, xPos, yPos, textPaint);
 
-        textPaint.setARGB(200, 255, 255, 255);
-        textPaint.setTextSize(100);
-        Log.d(TAG, countdownTimer);
-        xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
-        yPos = (int) ((canvas.getHeight() / 1.3) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-        canvas.drawText(countdownTimer, xPos, yPos, textPaint);
+                textPaint.setARGB(200, 255, 255, 255);
+                textPaint.setTextSize(100);
+                Log.d(TAG, countdownTimer);
+                xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
+                yPos = (int) ((canvas.getHeight() / 1.3) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(countdownTimer, xPos, yPos, textPaint);
+            } else if (pass) {
+                canvas.drawColor(Color.YELLOW);
+                Paint textPaint = new Paint();
+                String sampleText = "PASS";
+                textPaint.setARGB(200, 255, 255, 255);
+                textPaint.setTextSize(300);
+                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
+                int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(sampleText, xPos, yPos, textPaint);
+            } else if (correct) {
+                canvas.drawColor(Color.GREEN);
+                Paint textPaint = new Paint();
+                String sampleText = "CORRECT";
+                textPaint.setARGB(200, 255, 255, 255);
+                textPaint.setTextSize(300);
+                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
+                int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(sampleText, xPos, yPos, textPaint);
+            }
+        }
     }
 
 }

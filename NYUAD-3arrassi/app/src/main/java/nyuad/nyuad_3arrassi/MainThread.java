@@ -37,6 +37,10 @@ public class MainThread extends Thread {
         this.gamePanel = gamePanel;
     }
 
+    public SurfaceHolder returnSurfaceHolder(){
+        return surfaceHolder;
+    }
+
     @Override
     public void run() {
         Log.d(TAG, "Starting game loop");
