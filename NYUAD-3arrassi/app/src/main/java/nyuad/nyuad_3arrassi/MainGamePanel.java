@@ -113,6 +113,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         cDB.close();
         wordDatabase.close();
 
+        wordList.remove(MainActivity.wordList);
+        wordList.addAll(MainActivity.wordList);
+
         Collections.shuffle(wordList);
         while (!(wordList.get(currentWord).getCategory() == 1)) {
             currentWord++;
@@ -244,16 +247,29 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 textPaint.setARGB(200, 255, 255, 255);
                 textPaint.setTextSize(300);
 
-                String sampleText;
-                sampleText = wordList.get(currentWord).getArabic() + " " + wordList.get(currentWord).getEnglishPronounce();
-                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
-                int yPos = (int) ((canvas.getHeight() / 1.8) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(sampleText, xPos, yPos, textPaint);
+                String sampleWord;
+                String samplePron;
+                sampleWord = wordList.get(currentWord).getArabic();
+                samplePron = wordList.get(currentWord).getEnglishPronounce();
 
-                sampleText = wordList.get(currentWord).getEnglish() + " " + wordList.get(currentWord).getArabicPronounce();
-                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
+                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length()) - textPaint.measureText(samplePron, 0, samplePron.length())) / 2.0f);
+                int yPos = (int) ((canvas.getHeight() / 1.8) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(sampleWord, xPos, yPos, textPaint);
+
+                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length())) / 2.0f);
+                yPos = (int) ((canvas.getHeight() / 1.8) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(samplePron, xPos, yPos, textPaint);
+
+                sampleWord = wordList.get(currentWord).getEnglish();
+                samplePron = wordList.get(currentWord).getArabicPronounce();
+
+                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length()) - textPaint.measureText(samplePron, 0, samplePron.length())) / 2.0f);
                 yPos = (int) ((canvas.getHeight() / 3.0) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(sampleText, xPos, yPos, textPaint);
+                canvas.drawText(sampleWord, xPos, yPos, textPaint);
+
+                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length())) / 2.0f);
+                yPos = (int) ((canvas.getHeight() / 3.0) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                canvas.drawText(samplePron, xPos, yPos, textPaint);
 
                 textPaint.setARGB(200, 255, 255, 255);
                 textPaint.setTextSize(100);
