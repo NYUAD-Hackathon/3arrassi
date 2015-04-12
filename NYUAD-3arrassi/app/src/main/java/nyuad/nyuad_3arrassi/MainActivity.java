@@ -81,7 +81,14 @@ public class MainActivity extends Activity {
             for (int r = 1; r < rows.length(); ++r) {
                 String arabPron = rows.getJSONObject(r).getString("arabPron");
                 String arabWord = rows.getJSONObject(r).getString("arabWord");
-                int category = 1;
+                String sCategory = rows.getJSONObject(r).getString("category");
+                int category = 0;
+                if (sCategory == "Animal"){
+                    category = 1;
+                }
+                if (sCategory == "Food"){
+                    category = 2;
+                }
                 String englishPron = rows.getJSONObject(r).getString("englishPron");
                 String englishWord = rows.getJSONObject(r).getString("englishWord");
 
