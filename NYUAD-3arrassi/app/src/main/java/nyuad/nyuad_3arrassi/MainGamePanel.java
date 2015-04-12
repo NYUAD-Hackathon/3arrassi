@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -18,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import android.os.CountDownTimer;
-
-import java.util.Stack;
 
 /**
  * Created by Kong on 4/11/2015.
@@ -32,7 +29,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private MainThread thread;
 
     private int gameTime = 0;
-    private int currentWord = 0;
+    private int currentWordIndex = 0;
     private int score = 0;
     private long currentGameTime = 60000;
     private int currentCategory = 1;
@@ -117,8 +114,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         wordList.addAll(MainActivity.wordList);
 
         Collections.shuffle(wordList);
-        while (!(wordList.get(currentWord).getCategory() == 1)) {
-            currentWord++;
+        while (!(wordList.get(currentWordIndex).getCategory() == 1)) {
+            currentWordIndex++;
         }
 
         // make the GamePanel focusable so it can handle events
@@ -159,6 +156,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
             }
 
         }.start();
+
+
+        currentCategory = CategoryActivity.category;
 
         thread.setRunning(true);
         thread.start();
@@ -215,10 +215,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     void nextWord(){
-        currentWord = (currentWord+1)%wordList.size();
-        while (!(wordList.get(currentWord).getCategory() == 1)) {
-            currentWord = (currentWord+1)%wordList.size();
-        }
+        currentWordIndex = (currentWordIndex +1)%wordList.size();
+
         animationTimer.start();
         isAnimationDone = false;
         if (currentGameTime < 10000) {
@@ -232,50 +230,52 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update(){
-        if (currentWord > wordList.size() - 1){
-            currentWord = 0;
+        if (currentWordIndex > wordList.size() - 1){
+            currentWordIndex = 0;
+        }
+        while (!(wordList.get(currentWordIndex).getCategory() == currentCategory)) {
+            currentWordIndex = (currentWordIndex +1)%wordList.size();
         }
         //Log.d(TAG, "Game time shenanigans: " + gameTime);
+    }
+
+    private void renderText(Canvas canvas, String text, float centerX, float centerY) {
+        Paint textPaint = new Paint();
+        textPaint.setTextAlign(Paint.Align.LEFT);
+        textPaint.setARGB(200, 255, 255, 255);
+        textPaint.setTextSize(300);
+
+        float textWidth = textPaint.measureText(text);
+        float xPos = centerX - textWidth/2.0f;
+
+        float textHeight = textPaint.descent() + textPaint.ascent();
+        float yPos = centerY - textHeight/2.0f;
+
+        canvas.drawText(text, xPos, yPos, textPaint);
     }
 
     public void render(Canvas canvas){
         if (!isGameDone) {
             if (isAnimationDone) {
                 canvas.drawColor(Color.BLUE);
+
+
+                Word currentWord = wordList.get(currentWordIndex);
+
+                // rendering arabic word and english pronunciation
+                renderText(canvas, currentWord.getArabic(), canvas.getWidth()/4, canvas.getHeight()/4);
+                renderText(canvas, currentWord.getEnglishPronounce(), canvas.getWidth()*3/4, canvas.getHeight()/4);
+
+                // rendering english word and arabic pronunciation
+                renderText(canvas, currentWord.getEnglish(), canvas.getWidth()/4, canvas.getHeight()*0.6f);
+                renderText(canvas, currentWord.getArabicPronounce(), canvas.getWidth()*3/4, canvas.getHeight()*0.6f);
+
                 Paint textPaint = new Paint();
-                textPaint.setTextAlign(Paint.Align.LEFT);
-                textPaint.setARGB(200, 255, 255, 255);
-                textPaint.setTextSize(300);
-
-                String sampleWord;
-                String samplePron;
-                sampleWord = wordList.get(currentWord).getArabic();
-                samplePron = wordList.get(currentWord).getEnglishPronounce();
-
-                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length()) - textPaint.measureText(samplePron, 0, samplePron.length())) / 2.0f);
-                int yPos = (int) ((canvas.getHeight() / 1.8) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(sampleWord, xPos, yPos, textPaint);
-
-                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length())) / 2.0f);
-                yPos = (int) ((canvas.getHeight() / 1.8) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(samplePron, xPos, yPos, textPaint);
-
-                sampleWord = wordList.get(currentWord).getEnglish();
-                samplePron = wordList.get(currentWord).getArabicPronounce();
-
-                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length()) - textPaint.measureText(samplePron, 0, samplePron.length())) / 2.0f);
-                yPos = (int) ((canvas.getHeight() / 3.0) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(sampleWord, xPos, yPos, textPaint);
-
-                xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleWord, 0, sampleWord.length())) / 2.0f);
-                yPos = (int) ((canvas.getHeight() / 3.0) - ((textPaint.descent() + textPaint.ascent()) / 2));
-                canvas.drawText(samplePron, xPos, yPos, textPaint);
-
                 textPaint.setARGB(200, 255, 255, 255);
                 textPaint.setTextSize(100);
                 //Log.d(TAG, countdownTimer);
-                xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
-                yPos = (int) ((canvas.getHeight() / 1.2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+                int xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
+                int yPos = (int) ((canvas.getHeight() / 1.2) - ((textPaint.descent() + textPaint.ascent()) / 2));
                 canvas.drawText(countdownTimer, xPos, yPos, textPaint);
             } else if (pass) {
                 canvas.drawColor(Color.YELLOW);

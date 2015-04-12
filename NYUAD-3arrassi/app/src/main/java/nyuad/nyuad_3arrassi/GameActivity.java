@@ -1,6 +1,7 @@
 package nyuad.nyuad_3arrassi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class GameActivity extends Activity {
         // making it full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // set our MainGamePanel as the View
+
         setContentView(new MainGamePanel(this));
 
         Log.d(TAG, "View added");
