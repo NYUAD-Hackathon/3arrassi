@@ -7,20 +7,25 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="عراسي"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="عراسي"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name=".GameOverActivity"
+            android:label="عراسي" >
         </activity>
         <activity
             android:name=".CategoryActivity"
+            android:label="عراسي" >
         </activity>
         <activity
             android:name=".SplashActivity"
+            android:label="عراسي" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
