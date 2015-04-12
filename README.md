@@ -1,5 +1,5 @@
 # عراسي
-### (3a-rassi in English)
+### (Heads Up Arabic)
 
 Learn new language in a fun and easy way
 
