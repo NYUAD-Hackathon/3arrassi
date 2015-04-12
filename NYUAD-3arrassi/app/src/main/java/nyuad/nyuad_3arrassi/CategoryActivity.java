@@ -158,7 +158,7 @@ public class CategoryActivity extends Activity {
         try {
             JSONArray rows = object.getJSONArray("collection1");
 
-            for (int r = 1; r < rows.length(); ++r) {
+            for (int r = 2; r < rows.length(); ++r) {
                 String arabPron = rows.getJSONObject(r).getString("arabPron");
                 String arabWord = rows.getJSONObject(r).getString("arabWord");
                 String sCategory = rows.getJSONObject(r).getString("category");
