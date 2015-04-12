@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="nyuad.nyuad_3arrassi.CategoryActivity">
+    tools:context="nyuad.nyuad_3arrassi.CategoryActivity"
+    android:background="#ff06c2ff">
 
     TextView android:text="@string/hello_world" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -42,7 +43,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Verbs"
+        android:text="Activities"
         android:id="@+id/category4"
         android:layout_alignTop="@+id/category1"
         android:layout_alignParentRight="true"
@@ -60,7 +61,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pleasantries"
+        android:text="Hackathon"
         android:id="@+id/category6"
         android:layout_alignTop="@+id/category3"
         android:layout_alignRight="@+id/category5"

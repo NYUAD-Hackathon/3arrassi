@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -28,7 +29,6 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     MyAccelerometer accelerometer;
     private MainThread thread;
 
-    private int gameTime = 0;
     private int currentWordIndex = 0;
     private int score = 0;
     private long currentGameTime = 60000;
@@ -46,7 +46,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private CountDownTimer gameTimer;
 
-    private CountDownTimer animationTimer = new CountDownTimer(2000, 300) { // adjust the milli seconds here
+    private CountDownTimer animationTimer = new CountDownTimer(1000, 300) { // adjust the milli seconds here
 
         public void onTick(long millisUntilFinished) {
         }
@@ -160,6 +160,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 
         currentCategory = CategoryActivity.category;
+        currentGameTime = 60000;
 
         thread.setRunning(true);
         thread.start();
@@ -241,9 +242,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private void renderText(Canvas canvas, String text, float centerX, float centerY) {
+
         Paint textPaint = new Paint();
         textPaint.setTextAlign(Paint.Align.LEFT);
-        textPaint.setARGB(200, 255, 255, 255);
+        textPaint.setARGB(255, 255, 255, 255);
         textPaint.setTextSize(250);
 
         float textWidth = textPaint.measureText(text);
@@ -258,8 +260,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     public void render(Canvas canvas){
         if (!isGameDone) {
             if (isAnimationDone) {
-                canvas.drawColor(Color.BLUE);
-
+                canvas.drawARGB(255, 6, 194, 255);
 
                 Word currentWord = wordList.get(currentWordIndex);
 
@@ -272,18 +273,18 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 renderText(canvas, currentWord.getArabicPronounce(), canvas.getWidth()*3/4, canvas.getHeight()*0.6f);
 
                 Paint textPaint = new Paint();
-                textPaint.setARGB(200, 255, 255, 255);
+                textPaint.setARGB(255, 255, 255, 255);
                 textPaint.setTextSize(100);
                 //Log.d(TAG, countdownTimer);
                 int xPos = (int) ((canvas.getWidth() - textPaint.measureText(countdownTimer, 0, countdownTimer.length())) / 2.0f);
                 int yPos = (int) ((canvas.getHeight() / 1.2) - ((textPaint.descent() + textPaint.ascent()) / 2));
                 canvas.drawText(countdownTimer, xPos, yPos, textPaint);
             } else if (pass) {
-                canvas.drawColor(Color.YELLOW);
+                canvas.drawColor(Color.RED);
                 Paint textPaint = new Paint();
                 String sampleText = "PASS";
-                textPaint.setARGB(200, 255, 255, 255);
-                textPaint.setTextSize(300);
+                textPaint.setARGB(255, 255, 255, 255);
+                textPaint.setTextSize(250);
                 int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
                 int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
                 canvas.drawText(sampleText, xPos, yPos, textPaint);
@@ -291,8 +292,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 canvas.drawColor(Color.GREEN);
                 Paint textPaint = new Paint();
                 String sampleText = "CORRECT";
-                textPaint.setARGB(200, 255, 255, 255);
-                textPaint.setTextSize(300);
+                textPaint.setARGB(255, 255, 255, 255);
+                textPaint.setTextSize(250);
                 int xPos = (int) ((canvas.getWidth() - textPaint.measureText(sampleText, 0, sampleText.length())) / 2.0f);
                 int yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
                 canvas.drawText(sampleText, xPos, yPos, textPaint);

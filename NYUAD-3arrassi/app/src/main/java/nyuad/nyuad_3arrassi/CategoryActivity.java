@@ -169,6 +169,19 @@ public class CategoryActivity extends Activity {
                 if (sCategory.equals("Food")){
                     category = 2;
                 }
+                if (sCategory.equals("Countries")){
+                    category = 3;
+                }
+                if (sCategory.equals("Activities")){
+                    category = 4;
+                }
+                if (sCategory.equals("Holidays")){
+                    category = 5;
+                }
+                if (sCategory.equals("Hackathon")){
+                    category = 6;
+                }
+
                 String englishPron = rows.getJSONObject(r).getString("englishPron");
                 String englishWord = rows.getJSONObject(r).getString("englishWord");
 
