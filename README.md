@@ -23,4 +23,4 @@ Learn new language in a fun and easy way
 
 - Android app
 - SQLite database for word pairs
-- Google spreadsheet for user-added word pairs: [kimono api](https://www.kimonolabs.com/api/d5uktwtc?apikey=97f8fea63f458e384d7e1c819c72c67a)
+- Google spreadsheet published to the Web then parsed with Kimono for user-added word pairs: [Google Form](https://docs.google.com/forms/d/1GNmdpEW0ia1G0GYt4DdIziDLCMMTxV011Ab4ybWhd3A/viewform) [kimono api](https://www.kimonolabs.com/api/d5uktwtc?apikey=97f8fea63f458e384d7e1c819c72c67a)
