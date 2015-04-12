@@ -10,7 +10,7 @@ Learn new language in a fun and easy way
 - [Kong Huang](https://github.com/wheressswaldo)
 - [Mohammed AlTamimi](https://github.com/trance03)
 - [Rihab El Houda Djabou](https://github.com/rihabelhouda)
-- Lidia Daniela Jerónimo Sánchez
+- [Lidia Daniela Jerónimo Sánchez](https://www.linkedin.com/pub/lidia-jeronimo/7a/511/13b)
 - [Meriem Chehih](https://github.com/MeriemChehih)
 
 #### Mentors
