@@ -4,13 +4,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="nyuad.nyuad_3arrassi.MainActivity">
+    tools:context="nyuad.nyuad_3arrassi.SplashActivity"
+    android:background="#ff06c2ff">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Game"
-        android:id="@+id/newButton"
+        android:layout_height="50dp"
+        android:text="3A-RASSI"
+        android:textSize="40dp"
+        android:id="@+id/textView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

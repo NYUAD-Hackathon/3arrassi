@@ -110,8 +110,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         cDB.close();
         wordDatabase.close();
 
-        wordList.remove(MainActivity.wordList);
-        wordList.addAll(MainActivity.wordList);
+        wordList.remove(CategoryActivity.wordList);
+        wordList.addAll(CategoryActivity.wordList);
+        Log.d(TAG, Integer.toString(wordList.size()));
 
         Collections.shuffle(wordList);
         while (!(wordList.get(currentWordIndex).getCategory() == 1)) {
@@ -190,7 +191,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         }
         else {
             if (back) {
-                Intent intent = new Intent().setClass(getContext(), MainActivity.class);
+                Intent intent = new Intent().setClass(getContext(), CategoryActivity.class);
                 intent.putExtra("score", Integer.toString(score));
                 ((Activity) getContext()).startActivity(intent);
                 back = false;
@@ -243,7 +244,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         Paint textPaint = new Paint();
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setARGB(200, 255, 255, 255);
-        textPaint.setTextSize(300);
+        textPaint.setTextSize(250);
 
         float textWidth = textPaint.measureText(text);
         float xPos = centerX - textWidth/2.0f;

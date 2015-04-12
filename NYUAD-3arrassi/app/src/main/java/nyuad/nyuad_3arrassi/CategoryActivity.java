@@ -3,19 +3,32 @@ package nyuad.nyuad_3arrassi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class CategoryActivity extends Activity {
 
     public static int category = 1;
+    private static final String TAG = CategoryActivity.class.getSimpleName();
+    private Boolean exit = false;
+    public static ArrayList<Word> wordList = new ArrayList<Word>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +36,14 @@ public class CategoryActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_category);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        new DownloadWebpageTask(new AsyncResult() {
+            @Override
+            public void onResult(JSONObject object) {
+                processJson(object);
+            }
+        }).execute("https://www.kimonolabs.com/api/d5uktwtc?apikey=97f8fea63f458e384d7e1c819c72c67a");
+
 
         Button category1 = (Button) findViewById(R.id.category1);
 
@@ -113,6 +134,52 @@ public class CategoryActivity extends Activity {
 
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+
+    }
+
+    private void processJson(JSONObject object) {
+
+        try {
+            JSONArray rows = object.getJSONArray("collection1");
+
+            for (int r = 1; r < rows.length(); ++r) {
+                String arabPron = rows.getJSONObject(r).getString("arabPron");
+                String arabWord = rows.getJSONObject(r).getString("arabWord");
+                String sCategory = rows.getJSONObject(r).getString("category");
+                int category = 0;
+                if (sCategory.equals("Animal")){
+                    category = 1;
+                }
+                if (sCategory.equals("Food")){
+                    category = 2;
+                }
+                String englishPron = rows.getJSONObject(r).getString("englishPron");
+                String englishWord = rows.getJSONObject(r).getString("englishWord");
+
+                wordList.add(new Word(category, arabWord, englishWord, arabPron, englishPron));
+                Log.d(TAG, Integer.toString(category));
+            }
+
+
+        } catch (JSONException e) {
+            //e.printStackTrace();
+        }
     }
 
 }

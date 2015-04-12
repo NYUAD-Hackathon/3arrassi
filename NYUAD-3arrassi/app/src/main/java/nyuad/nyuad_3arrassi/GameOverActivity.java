@@ -37,7 +37,7 @@ public class GameOverActivity extends Activity {
         Button mainMenu = (Button) findViewById(R.id.mainmenu);
         mainMenu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+                Intent nextScreen = new Intent(getApplicationContext(), CategoryActivity.class);
                 // starting new activity
                 nextScreen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(nextScreen);
@@ -48,7 +48,7 @@ public class GameOverActivity extends Activity {
     @Override
     public void onBackPressed() {
         Log.d("CDA", "onBackPressed Called");
-        Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+        Intent nextScreen = new Intent(getApplicationContext(), CategoryActivity.class);
         nextScreen.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(nextScreen);
         finish();
