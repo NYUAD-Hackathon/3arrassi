@@ -31,7 +31,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     private int currentWordIndex = 0;
     private int score = 0;
-    private long currentGameTime = 10000;
+    private long currentGameTime = 60000;
     private int currentCategory = 1;
     private String countdownTimer = "";
 
@@ -160,7 +160,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 
         currentCategory = CategoryActivity.category;
-        currentGameTime = 10000;
+        currentGameTime = 60000;
 
         thread.setRunning(true);
         thread.start();
@@ -221,7 +221,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         animationTimer.start();
         isAnimationDone = false;
-        if (currentGameTime < 10000) {
+        if (currentGameTime < 60000) {
             gameTimer.cancel();
         }
     }

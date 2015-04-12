@@ -9,11 +9,12 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="3A-RASSI"
-        android:textSize="40dp"
+        android:layout_height="wrap_content"
+        android:text="عراسي"
+        android:textSize="60dp"
         android:id="@+id/textView"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

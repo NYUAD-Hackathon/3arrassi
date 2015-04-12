@@ -36,6 +36,9 @@ public class GameOverActivity extends Activity {
         scoreView.setText(score);
 
         switch(iScore){
+            case 0:
+                commentView.setText("How did you get nothing correct?");
+                break;
             case 1:
                 commentView.setText("You only got one? Practice more");
                 break;
