@@ -110,9 +110,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         cDB.close();
         wordDatabase.close();
 
-        wordList.remove(CategoryActivity.wordList);
-        wordList.addAll(CategoryActivity.wordList);
         Log.d(TAG, Integer.toString(wordList.size()));
+
 
         Collections.shuffle(wordList);
         while (!(wordList.get(currentWordIndex).getCategory() == 1)) {
@@ -161,6 +160,17 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         currentCategory = CategoryActivity.category;
         currentGameTime = 60000;
+
+        wordList.remove(CategoryActivity.wordList);
+        wordList.addAll(CategoryActivity.wordList);
+
+        for (int i = 1; i < wordList.size(); i++) {
+            String a1 = wordList.get(i).getEnglish();
+            String a2 = wordList.get(i-1).getEnglish();
+            if (a1.equals(a2)) {
+                wordList.remove(a1);
+            }
+        }
 
         thread.setRunning(true);
         thread.start();
