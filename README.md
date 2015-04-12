@@ -21,3 +21,4 @@ Learn new language in a fun and easy way
 
 - Android app
 - SQLite database for word pairs
+- Google spreadsheet for user-added word pairs: [link to article](https://coderwall.com/p/duapqq/use-a-google-spreadsheet-as-your-json-backend)
