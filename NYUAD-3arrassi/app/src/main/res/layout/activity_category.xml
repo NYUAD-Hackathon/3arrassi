@@ -11,59 +11,65 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:text="Animals"
         android:id="@+id/category1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Food"
-        android:id="@+id/category2"
-        android:layout_below="@+id/category1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="75dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Countries"
-        android:id="@+id/category3"
-        android:layout_marginTop="72dp"
-        android:layout_below="@+id/category2"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_alignTop="@+id/category4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:text="Food"
+        android:id="@+id/category2"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_below="@+id/category4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:text="Countries"
+        android:id="@+id/category3"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_below="@+id/category5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:text="Activities"
         android:id="@+id/category4"
-        android:layout_alignTop="@+id/category1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_above="@+id/category5"
+        android:layout_alignLeft="@+id/category5"
+        android:layout_alignStart="@+id/category5"
+        android:layout_marginBottom="28dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:text="Holidays"
         android:id="@+id/category5"
-        android:layout_above="@+id/category3"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_above="@+id/category6"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="24dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
         android:text="Hackathon"
         android:id="@+id/category6"
-        android:layout_alignTop="@+id/category3"
-        android:layout_alignRight="@+id/category5"
-        android:layout_alignEnd="@+id/category5" />
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="27dp" />/>
 </RelativeLayout>

@@ -28,11 +28,33 @@ public class GameOverActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         TextView scoreView = (TextView) findViewById(R.id.score);
+        TextView commentView = (TextView) findViewById(R.id.comment);
 
         Intent i = getIntent();
         String score = i.getStringExtra("score");
-
+        int iScore = Integer.parseInt(score);
         scoreView.setText(score);
+
+        switch(iScore){
+            case 1:
+                commentView.setText("You only got one? Practice more");
+                break;
+            case 2:
+                commentView.setText("Two's okay.");
+                break;
+            case 3:
+                commentView.setText("Three? Almost there!");
+                break;
+            case 4:
+                commentView.setText("You're not that bad at this.");
+                break;
+            case 5:
+                commentView.setText("You got five! Good job!");
+                break;
+            default:
+                commentView.setText("You're a decent speaker!");
+                break;
+        }
 
         Button mainMenu = (Button) findViewById(R.id.mainmenu);
         mainMenu.setOnClickListener(new View.OnClickListener() {
