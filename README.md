@@ -5,17 +5,17 @@ Learn new language in a fun and easy way
 
 #### Students
 
-- Kong Huang
-- Mohammed AlTamimi
-- Rihab El Houda Djabou
+- [Kong Huang](https://github.com/wheressswaldo)
+- [Mohammed AlTamimi](https://github.com/trance03)
+- [Rihab El Houda Djabou](https://github.com/rihabelhouda)
 - Lidia Daniela Jerónimo Sánchez
-- Meriem Chehih
+- [Meriem Chehih](https://github.com/MeriemChehih)
 
 #### Mentors
 
-- Sashko Stubailo
-- Rabeb Othnani
-- Henok Getachew Alemayehu
+- [Sashko Stubailo](https://github.com/stubailo)
+- [Rabeb Othnani](https://github.com/RabebOthmani)
+- [Henok Getachew Alemayehu](https://github.com/henokgetachew)
 
 ### Technology stack
 
