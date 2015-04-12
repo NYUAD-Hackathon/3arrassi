@@ -21,4 +21,4 @@ Learn new language in a fun and easy way
 
 - Android app
 - SQLite database for word pairs
-- Google spreadsheet for user-added word pairs: [link to article](https://coderwall.com/p/duapqq/use-a-google-spreadsheet-as-your-json-backend), [link to JSON data](https://spreadsheets.google.com/feeds/list/1lSU4P0IaHd1BOD0ogiVCV4yyMTs26uh1TO91mabDF4U/od6/public/values?alt=json)
+- Google spreadsheet for user-added word pairs: [kimono api](https://www.kimonolabs.com/api/d5uktwtc?apikey=97f8fea63f458e384d7e1c819c72c67a)
