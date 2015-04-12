@@ -1,4 +1,4 @@
-# عراسي    (arrassi)
+# عراسي    (3-assi)
 Learn new language in a fun and easy way
 
 ### Team
