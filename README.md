@@ -1,5 +1,5 @@
 # عراسي
-# 3a-rassi
+## 3a-rassi in English
 Learn new language in a fun and easy way
 
 ### Team
